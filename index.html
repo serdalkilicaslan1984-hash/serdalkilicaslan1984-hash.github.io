@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezan Vakti - Modern Namaz Vakitleri ve Kıble Uygulaması</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1D3557;
+            --secondary: #457B9D;
+            --accent: #D4AF37;
+            /* Gold */
+            --light: #F1FAEE;
+            --dark: #0D1B2A;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, #1B263B 0%, #0D1B2A 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(13, 27, 42, 0.7);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .lang-toggle {
+            display: flex;
+            gap: 10px;
+            background: var(--glass);
+            padding: 5px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-btn {
+            padding: 5px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .lang-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #A8DADC;
+            margin-bottom: 40px;
+            max-width: 500px;
+        }
+
+        .download-btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 450px;
+            filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.5));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Features */
+        .features {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 3rem;
+            margin-bottom: 50px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px);
+            border-color: var(--accent);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            padding: 100px 0;
+            background: rgba(29, 53, 87, 0.3);
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+        }
+
+        .screenshot-slider {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 40px 0;
+            scrollbar-width: none;
+        }
+
+        .screenshot-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .screenshot-item {
+            min-width: 250px;
+            height: 500px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 4px solid var(--glass);
+            transition: all 0.3s;
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--glass);
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-links a {
+            color: #A8DADC;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Multi-language content management */
+        [data-lang] {
+            display: none;
+        }
+
+        body.lang-tr [data-lang="tr"] {
+            display: block;
+        }
+
+        body.lang-tr span[data-lang="tr"] {
+            display: inline;
+        }
+
+        body.lang-tr div[data-lang="tr"] {
+            display: block;
+        }
+
+        body.lang-en [data-lang="en"] {
+            display: block;
+        }
+
+        body.lang-en span[data-lang="en"] {
+            display: inline;
+        }
+
+        body.lang-en div[data-lang="en"] {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 60px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .download-btns {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="lang-tr">
+    <div class="hero-bg"></div>
+
+    <nav class="container">
+        <a href="#" class="logo">
+            <img src="assets/logo_app.png" alt="Ezan Vakti">
+            Ezan Vakti
+        </a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#features"><span data-lang="tr">Özellikler</span><span data-lang="en">Features</span></a>
+                <a href="#screenshots"><span data-lang="tr">Görseller</span><span data-lang="en">Screenshots</span></a>
+                <a href="privacy-policy.html"><span data-lang="tr">Gizlilik</span><span
+                        data-lang="en">Privacy</span></a>
+            </div>
+            <div class="lang-toggle">
+                <div class="lang-btn active" onclick="setLang('tr')">TR</div>
+                <div class="lang-btn" onclick="setLang('en')">EN</div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="container hero" id="home">
+        <div class="hero-content">
+            <div data-lang="tr">
+                <h1>Vakitleri Asla Kaçırmayın</h1>
+                <p>Ezan Vakti ile namaz vakitlerini, kıble yönünü ve dini günleri en modern ve şık arayüzle takip edin.
+                    Tamamen ücretsiz ve huzurlu deneyim!</p>
+            </div>
+            <div data-lang="en">
+                <h1>Never Miss a Prayer</h1>
+                <p>Follow prayer times, Qibla direction, and religious days with the most modern and stylish interface
+                    with Ezan Vakti. Completely free and peaceful experience!</p>
+            </div>
+            <div class="download-btns">
+                <a href="https://play.google.com/store/apps/details?id=com.kilicaslan.ezanvakti"
+                    class="btn btn-primary">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M3.609 1.814L13.792 12 3.61 22.186c-.18.18-.31.42-.31.7 0 .55.45 1 1 1 .28 0 .52-.11.7-.31l10.884-10.884c.18-.18.31-.42.31-.7s-.13-.52-.31-.7L5 1.116c-.18-.18-.42-.31-.7-.31-.55 0-1 .45-1 1 0 .28.13.52.309.698zM17.417 12l4.884-4.884c.18-.18.31-.42.31-.7s-.13-.52-.31-.7L17.417 1l-.7.7 4.184 4.184L12.717 14l4.7 4.7 4.184-4.184.7-.7-4.884-4.884z" />
+                    </svg>
+                    <span data-lang="tr">Google Play'den İndir</span>
+                    <span data-lang="en">Download on Google Play</span>
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="app_mockup_hero.png" alt="Ezan Vakti Uygulama Mockup">
+        </div>
+    </header>
+
+    <section class="container features" id="features">
+        <h2 data-lang="tr">Modern Özellikler</h2>
+        <h2 data-lang="en">Modern Features</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i>🕌</i>
+                <div data-lang="tr">
+                    <h3>Hassas Vakitler</h3>
+                    <p>Konumunuza göre en doğru namaz vakitlerini anlık olarak hesaplar.</p>
+                </div>
+                <div data-lang="en">
+                    <h3>Accurate Times</h3>
+                    <p>Calculates the most accurate prayer times based on your location in real-time.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <i>🧭</i>
+                <div data-lang="tr">
+                    <h3>Kıble Pusulası</h3>
+                    <p>Gelişmiş pusula ile kıbleyi dünyanın her yerinde kolayca bulun.</p>
+                </div>
+                <div data-lang="en">
+                    <h3>Qibla Compass</h3>
+                    <p>Easily find the Qibla anywhere in the world with the advanced compass.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <i>🤲</i>
+                <div data-lang="tr">
+                    <h3>Dualar ve Zikirler</h3>
+                    <p>Günlük dualar ve zikirmatik özelliği tek bir arayüzde.</p>
+                </div>
+                <div data-lang="en">
+                    <h3>Prayers & Dhikr</h3>
+                    <p>Daily prayers and dhikr counter all in one interface.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <i>📅</i>
+                <div data-lang="tr">
+                    <h3>Dini Günler</h3>
+                    <p>Mübarek gün ve geceleri takvim üzerinden takip edin.</p>
+                </div>
+                <div data-lang="en">
+                    <h3>Religious Days</h3>
+                    <p>Track holy days and nights easily through the calendar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <h2 data-lang="tr">Uygulama İçinden</h2>
+            <h2 data-lang="en">App Screenshots</h2>
+            <div class="screenshot-slider">
+                <div class="screenshot-item"><img src="live_homescreen.png" alt="Ana Ekran"></div>
+                <div class="screenshot-item"><img src="live_qiblascreen_v2.png" alt="Kıble Pusulası"></div>
+                <div class="screenshot-item"><img src="live_duascreen.png" alt="Dualar"></div>
+                <div class="screenshot-item"><img src="live_specialdays.png" alt="Dini Günler"></div>
+                <div class="screenshot-item"><img src="homescreen_final.png" alt="Widget"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container">
+        <a href="#" class="footer-logo">Ezan Vakti</a>
+        <div class="footer-links">
+            <a href="#home"><span data-lang="tr">Ana Sayfa</span><span data-lang="en">Home</span></a>
+            <a href="#features"><span data-lang="tr">Özellikler</span><span data-lang="en">Features</span></a>
+            <a href="privacy-policy.html"><span data-lang="tr">Gizlilik Politikası</span><span data-lang="en">Privacy
+                    Policy</span></a>
+        </div>
+        <p>&copy; 2026 Ezan Vakti - Kılıçaslan. <span data-lang="tr">Tüm Hakları Saklıdır.</span><span
+                data-lang="en">All Rights Reserved.</span></p>
+    </footer>
+
+    <script>
+        function setLang(lang) {
+            document.body.className = 'lang-' + lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+            });
+            localStorage.setItem('preferred-lang', lang);
+        }
+
+        // Auto-detect or use stored preference
+        const storedLang = localStorage.getItem('preferred-lang') || 'tr';
+        setLang(storedLang);
+    </script>
+</body>
+
+</html>
