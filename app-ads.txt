@@ -1,1 +1,2 @@
+# app-ads.txt for Ezan Vakti - Google AdMob only
 google.com, pub-6194954389943739, DIRECT, f08c47fec0942fa0
